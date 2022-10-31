@@ -39,7 +39,7 @@ Si ocurre un error, el tiempo mostrado será infinito, excepto en un error de ti
 
 Cada programa se ejecuta con un limitador de memoria, si se pasa de 6 millones de kilobytes (<= 6GB), el proceso se interrumpirá. Esa cantidad se puede modificar.
 
-## Creditos
+## Créditos
 
 - <https://github.com/pshved/timeout>
 - <https://github.com/lowleveldesign/process-governor>

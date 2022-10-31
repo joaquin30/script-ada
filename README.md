@@ -33,7 +33,7 @@ $ python puzzle.py 5
 
 Volvamos al programa principal. La siguiente pregunta será "Number of puzzles:", que será el número de puzzles generados para resolver y sacar el promedio del tiempo.
 
-Despues se ejecutará todos los programas y mostrará los errores, tiempos y una gráfica de barras (es necesario instalar matplotlib y numpy).
+Despues se ejecutará todos los programas y mostrará los errores, tiempos y una gráfica de barras (es necesario instalar gcc, matplotlib y numpy).
 
 Si ocurre un error, el tiempo mostrado será infinito, excepto en un error de timeout, en ese caso el tiempo será el máximo permitido por ejecución (por defecto son 60 segundos).
 

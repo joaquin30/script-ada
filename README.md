@@ -38,3 +38,8 @@ Despues se ejecutará todos los programas y mostrará los errores, tiempos y una
 Si ocurre un error, el tiempo mostrado será infinito, excepto en un error de timeout, en ese caso el tiempo será el máximo permitido por ejecución (por defecto son 60 segundos).
 
 Cada programa se ejecuta con un limitador de memoria, si se pasa de 6 millones de kilobytes (<= 6GB), el proceso se interrumpirá. Esa cantidad se puede modificar.
+
+## Creditos
+
+- <https://github.com/pshved/timeout>
+- <https://github.com/lowleveldesign/process-governor>

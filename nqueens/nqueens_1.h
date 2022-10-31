@@ -12,7 +12,7 @@ double nqueens_1(int n, int x, int y)
     nfile.open("nqueens_1.txt");
     nfile << n << x << y;
     nfile.close();
-    return 2.1;
+    return 2.31;
 }
 
 #endif

@@ -10,7 +10,7 @@ double nqueens_3(int n, int x, int y)
 {
     int *p = NULL;
     *p = x;
-    return 13;
+    return 12;
 }
 
 #endif

@@ -10,7 +10,7 @@ double puzzle_2()
 {
     int *p = NULL;
     *p = 5;
-    return 12;
+    return 12.1;
 }
 
 #endif

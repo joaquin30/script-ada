@@ -70,6 +70,12 @@ class Board:
                         prev = 2
                     break
 
+        while self.pos[0] < self.n-1:
+            self.pos = right(self.pos[0], self.pos[1])
+
+        while self.pos[1] < self.n-1:
+            self.pos = down(self.pos[0], self.pos[1])
+
 if __name__ == '__main__':
     from sys import argv
     board = Board(int(argv[1]))

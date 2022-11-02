@@ -12,7 +12,7 @@ double horse_5(int n, int x, int y)
     nfile.open("horse_5.txt");
     nfile << n << x << y;
     nfile.close();
-    return 6.5;
+    return horse_5;
 }
 
 #endif

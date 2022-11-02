@@ -11,7 +11,7 @@ double puzzle_5()
     std::ofstream nfile;
     nfile.open("puzzle_5.txt");
     nfile.close();
-    return 14;
+    return error;
 }
 
 #endif

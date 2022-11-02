@@ -1,4 +1,12 @@
-# Script ADA
+# Script ADA Grupo 3
+
+## Integrantes
+
+- Bruno Fernandez
+- Joaquin Pino
+- Fredy Quispe
+
+## Instrucciones
 
 Para correr el script deben poner sus archivos `.h` en las carpetas "puzzle", "nqueens" o "horse", según corresponda. Las carpetas ya tienen archivos de ejemplo.
 
@@ -11,6 +19,7 @@ Despues, en la consola escriben `python script.py` y dan enter.
 Allí les preguntarán "Use script to generate random puzzle.txt? [y/n]", si responden que no el script no modificará el archivo que deberá estar output/puzzle/puzzle.txt
 
 Si responden que si hará 2 preguntas:
+
 - "Puzzle size:". Acá responderán con el tamaño del lado del puzzle
 - "Number of moves to shuffle the puzzle:" Acá responderan con cuantos movimientos se mezclará el puzzle. Si no saben que poner, 100 es una buena opción.
 

@@ -5,50 +5,54 @@ import matplotlib.pyplot as plt
 import sys
 from puzzle import Board
 
-
+TIMEOUT = 2
 
 if sys.platform == 'win32':
-    shell = True
+    SHELL = True
     run(['md', 'output\\puzzle'], shell=True,
         stdout=DEVNULL, stderr=DEVNULL)
-    cmd = ['..\\bin\\procgov64.exe', '--maxmem', '6000000K',
-           '--', '.\\main.exe']
+    CMD = ['..\\bin\\procgov64.exe', '--maxmem', '6000000K',
+           '--', '.\\run.exe']
+    RM = ['del' '/f' 'output\\run.exe']
 elif sys.platform == 'linux':
-    shell = False
+    SHELL = False
     run(['mkdir', '-p', 'output/puzzle'],
         stdout=DEVNULL, stderr=DEVNULL)
-    cmd = ['../bin/timeout.pl', '-m', '6000000', './main.exe']
+    CMD = ['../bin/timeout.pl', '-m', '6000000', './run.exe']
+    RM = ['rm', '-f', 'output/run.exe']
+
+CC = ['g++', 'output/main.cpp', '-o', 'output/run.exe', '-std=c++11', '-Ofast', '-I.']
 
 def execute(name, num, args):
     file = f'''#include <fstream>
 #include "{name}/{name}_{num}.h"
 int main() {{
-    std::ofstream out("out");
+    std::ofstream __out("time.txt");
     auto time = {name}_{num}({str(args).strip('[]')});
-    out << time;
+    __out << time;
 }}'''
 
-    with open('output/main.cc', 'w') as out:
+    with open('output/main.cpp', 'w') as out:
         out.write(file)
 
+    run(RM, stdout=DEVNULL, stderr=DEVNULL, shell=SHELL)
     try:
-        run(['g++', 'output/main.cc', '-o', 'output/main.exe',
-            '-std=c++11', '-Ofast', '-I.'], check=True)
+        run(CC, check=True, stdout=DEVNULL, stderr=DEVNULL, shell=SHELL)
     except:
         print(f'Compilation error: {name}_{num}')
         return inf
 
     try:
-        run(cmd, timeout=60, cwd='output', shell=shell,
+        run(CMD, timeout=TIMEOUT, cwd='output', shell=SHELL,
             stdout=DEVNULL, stderr=DEVNULL, check=True)
     except TimeoutExpired:
         print(f'Timeout error: {name}_{num}')
-        return 60.0
+        return float(TIMEOUT)
     except:    
         print(f'Runtime error: {name}_{num}')
         return inf
 
-    return float(open('output/out').read())
+    return float(open('output/time.txt').read())
 
 def getinputs(filename, result):
     file = open(filename)
@@ -75,7 +79,10 @@ puzzleopt = input("Use script to generate random puzzle.txt? [y/n] ")
 if puzzleopt == 'y':
     puzzleopt = True
     puzzlesize = int(input("Puzzle size: "))
-    puzzleiter = int(input("Number of moves to shuffle the puzzle: "))
+    try:
+        puzzleiter = int(input("Number of moves to shuffle the puzzle (default 100): "))
+    except:
+        puzzleiter = 100
 else:
     puzzleopt = False
 

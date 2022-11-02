@@ -4,9 +4,9 @@
 #include <iostream>
 #include <fstream>
 
-double puzzle_5();
+double puzzle_3();
 
-double puzzle_5()
+double puzzle_3()
 {
     std::ofstream nfile;
     nfile.open("puzzle_3.txt");

@@ -1,12 +1,12 @@
-from subprocess import run, TimeoutExpired, DEVNULL
+from subprocess import run, TimeoutExpired, DEVNULL, Popen
 from math import inf
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 from puzzle import Board
 
-TIMEOUT = 60 # segundos
-MAXMEM = 6_000_000 # kilobytes
+TIMEOUT = 10 # segundos
+MAXMEM = 1_000_000 # kilobytes
 CC = ['g++', 'output/main.cpp', '-o', 'output/run.exe', '-std=c++11', '-Ofast', '-I.']
 
 if sys.platform == 'win32':
@@ -15,13 +15,13 @@ if sys.platform == 'win32':
         stdout=DEVNULL, stderr=DEVNULL)
     CMD = ['..\\bin\\procgov64.exe', '--maxmem', f'{MAXMEM}K',
            '--', '.\\run.exe']
-    RM = ['del' '/f' 'output\\run.exe']
+    RM = ['del' '/f' 'output\\run.exe', 'output\\time.txt']
 elif sys.platform == 'linux':
     SHELL = False
     run(['mkdir', '-p', 'output/puzzle'],
         stdout=DEVNULL, stderr=DEVNULL)
     CMD = ['../bin/timeout.pl', '-m', str(MAXMEM), './run.exe']
-    RM = ['rm', '-f', 'output/run.exe']
+    RM = ['rm', '-f', 'output/run.exe', 'output/time.txt']
 
 def execute(name, num, args):
     file = f'''#include <fstream>
@@ -37,22 +37,30 @@ int main() {{
 
     run(RM, stdout=DEVNULL, stderr=DEVNULL, shell=SHELL)
     try:
-        run(CC, check=True, stdout=DEVNULL, stderr=DEVNULL, shell=SHELL)
+        run(CC, check=True, stdout=DEVNULL, stderr=DEVNULL)
     except:
         print(f'Compilation error: {name}_{num}')
         return inf
 
+    p = Popen(CMD, stdout=DEVNULL, stderr=DEVNULL, shell=SHELL, cwd='output')
     try:
-        run(CMD, timeout=TIMEOUT, cwd='output', shell=SHELL,
-            stdout=DEVNULL, stderr=DEVNULL, check=True)
+        p.communicate(timeout=TIMEOUT)
     except TimeoutExpired:
+        p.kill()
         print(f'Timeout error: {name}_{num}')
         return float(TIMEOUT)
-    except:    
+
+    if p.returncode != 0:
         print(f'Runtime error: {name}_{num}')
         return inf
 
-    return float(open('output/time.txt').read())
+    try:
+        tm = float(open('output/time.txt').read())
+    except:
+        tm = inf
+        print(f'Time not returned: {name}_{num}')
+
+    return tm
 
 def getinputs(filename, result):
     file = open(filename)
@@ -80,9 +88,9 @@ if puzzleopt == 'y':
     puzzleopt = True
     puzzlesize = int(input("Puzzle size: "))
     try:
-        puzzleiter = int(input("Number of moves to shuffle the puzzle (default 100): "))
+        puzzleiter = int(input("Number of moves to shuffle the puzzle (default 50): "))
     except:
-        puzzleiter = 100
+        puzzleiter = 50
 else:
     puzzleopt = False
 

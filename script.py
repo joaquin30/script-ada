@@ -88,9 +88,9 @@ if puzzleopt == 'y':
     puzzleopt = True
     puzzlesize = int(input("Puzzle size: "))
     try:
-        puzzleiter = int(input("Number of moves to shuffle the puzzle (default 50): "))
+        puzzleiter = int(input("Number of moves to shuffle the puzzle (default 100): "))
     except:
-        puzzleiter = 50
+        puzzleiter = 100
 else:
     puzzleopt = False
 

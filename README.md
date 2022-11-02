@@ -53,7 +53,7 @@ La última pregunta será *Number of puzzles*, que será el número de puzzles g
 
 Si ocurre un error, el tiempo mostrado será infinito, excepto en un error de *Timeout*, en ese caso el tiempo será el máximo permitido por ejecución. Por defecto son 10 segundos, pero se puede modificar con la variable TIMEOUT.
 
-Cada programa se ejecuta con un limitador de memoria, si se pasa de 6 millones de kilobytes (<= 6GB), el proceso se terminará. Esa cantidad se puede modificar en la variable MAXMEM.
+Cada programa se ejecuta con un limitador de memoria, si se pasa de 1 millon de kilobytes (<= 1GB), el proceso se terminará. Esa cantidad se puede modificar en la variable MAXMEM.
 
 ## Créditos
 

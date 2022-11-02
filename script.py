@@ -5,23 +5,23 @@ import matplotlib.pyplot as plt
 import sys
 from puzzle import Board
 
-TIMEOUT = 2
+TIMEOUT = 60 # segundos
+MAXMEM = 6_000_000 # kilobytes
+CC = ['g++', 'output/main.cpp', '-o', 'output/run.exe', '-std=c++11', '-Ofast', '-I.']
 
 if sys.platform == 'win32':
     SHELL = True
     run(['md', 'output\\puzzle'], shell=True,
         stdout=DEVNULL, stderr=DEVNULL)
-    CMD = ['..\\bin\\procgov64.exe', '--maxmem', '6000000K',
+    CMD = ['..\\bin\\procgov64.exe', '--maxmem', f'{MAXMEM}K',
            '--', '.\\run.exe']
     RM = ['del' '/f' 'output\\run.exe']
 elif sys.platform == 'linux':
     SHELL = False
     run(['mkdir', '-p', 'output/puzzle'],
         stdout=DEVNULL, stderr=DEVNULL)
-    CMD = ['../bin/timeout.pl', '-m', '6000000', './run.exe']
+    CMD = ['../bin/timeout.pl', '-m', str(MAXMEM), './run.exe']
     RM = ['rm', '-f', 'output/run.exe']
-
-CC = ['g++', 'output/main.cpp', '-o', 'output/run.exe', '-std=c++11', '-Ofast', '-I.']
 
 def execute(name, num, args):
     file = f'''#include <fstream>
